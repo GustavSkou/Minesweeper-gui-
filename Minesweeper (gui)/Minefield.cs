@@ -1,13 +1,11 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Minesweeper__gui_;
 using System;
 
 public class Minefield
 {
-    private int _height;
-    private int _width;
-    private int _mines;
+    private int _height, _width, _mines;
+
     private Cell[,] cells;
 
     /* Singleton */
@@ -28,7 +26,6 @@ public class Minefield
         SetCells ( cells );
         SetMines ( cells );
         SetNumbers ( cells );
-
     }
 
     public void Draw( MainWindow window )
@@ -57,7 +54,7 @@ public class Minefield
         {
             for ( int column = 0; column < _width; column++ )
             {
-                cells[row, column] = new Cell ( row, column );
+                cells[row, column] = new ClosedCell ( row, column );
             }
         }
     }
@@ -67,16 +64,17 @@ public class Minefield
         Random random = new Random();
         int[ , ] minesCoordinates = new int[ _mines, 2 ];
 
-        for (int i = 0; i < _mines; i++)
+        int placedMines = 0;
+        while (placedMines < 10)
         {
-            minesCoordinates[i, 0] = random.Next ( 0, _height );
-            minesCoordinates[i, 1] = random.Next ( 0, _width );
-        }
+            int row = random.Next ( 0, _height );
+            int column = random.Next ( 0, _width );
 
-        for ( int i = 0; i < _mines; i++ )
-        {
-            cells[ minesCoordinates[i, 0], minesCoordinates[i, 1] ] = 
-                new Mine ( minesCoordinates[i, 0], minesCoordinates[i, 1] );
+            if ( cells[row, column] is not Mine )
+            {
+                placedMines++;
+                cells[row, column] = new Mine ( cells[row, column] );
+            }            
         }
     }
 
@@ -87,6 +85,9 @@ public class Minefield
         {
             for ( int column = 0; column < _width; column++ )
             {
+                // Don't count around a mine
+                if ( cells[row, column] is Mine) continue;
+
                 // Go through each cell in the 3x3 grid around the cell
                 for ( int x = row - 1; x <= row + 1; x++ )
                 {
@@ -96,8 +97,8 @@ public class Minefield
                         if ( x >= 0 && x < _height && y >= 0 && y < _width )    
                         {
                             // Skip the cell itself
-                            if ( x == row && y == column) continue;              
-
+                            if ( x == row && y == column) continue;     
+                        
                             if ( cells[x, y] is Mine )
                             {
                                 cells[row, column].NeighbourMines++;
@@ -105,6 +106,9 @@ public class Minefield
                         }
                     }
                 }
+                cells[row, column].Symbol = cells[row, column].NeighbourMines > 0 ? 
+                    cells[row, column].NeighbourMines.ToString () : 
+                    cells[row, column].Symbol;
             }
         }
     }
@@ -117,7 +121,8 @@ public class Minefield
             Width = 35,
             Height = 35,
             Tag = cell,
-            Margin = new Avalonia.Thickness ( 5 )
+            Margin = new Avalonia.Thickness ( 5 ),
+            Background = ClosedCell.Color
         };
 
         button.Click += window.CellClickHandler;

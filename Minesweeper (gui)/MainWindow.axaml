@@ -5,8 +5,24 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Minesweeper__gui_.MainWindow"
         Title="Minesweeper__gui_">
+    <Window.Styles>
+      <Style Selector="Button.no-hover">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Template">
+          <ControlTemplate>
+            <Border Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}">
+              <ContentPresenter HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+            </Border>
+          </ControlTemplate>
+        </Setter>
+      </Style>
+    </Window.Styles>
 
-  <Grid Name="MinefieldGrid" HorizontalAlignment="Center" Background="Aqua"> 
+  <Grid Name="MinefieldGrid" HorizontalAlignment="Center" Background=""> 
     
   </Grid> <!-- This is where the minefield will be drawn -->
   

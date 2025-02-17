@@ -16,11 +16,13 @@ namespace Minesweeper__gui_
         {
             if ( sender is Button button)
             {
-                if ( button.Tag is Cell cell )
+                if ( button.Tag is Cell cell)
+                {
                     // Checks both if cell is flagged and if cell is already revealed
                     // Then it sets revealed to true, 
                     // If it's a mine the override Reveal method will be called
                     cell.Reveal (button);
+                }
             }
         }
 
@@ -29,8 +31,9 @@ namespace Minesweeper__gui_
             if ( sender is Button button )
             {
                 if ( button.Tag is Cell cell )
-                    
+                {
                     cell.Flag ( button );
+                }
             }
         }
     }

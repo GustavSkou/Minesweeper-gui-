@@ -1,16 +1,35 @@
-﻿using System;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 
 public class Mine : Cell
 {
-	public Mine(int x, int y) : base (x, y)
+    public Mine ( Cell cell )
     {
-        _symbol = '¤';
+        _x = cell.X;
+        _y = cell.Y;
+
+        _symbol = "¤";
+
+        _isMine = true;
+        _isFlagged = cell.IsFlagged;
+        _isRevealed = cell.IsRevealed;
+        _neighbourMines = cell.NeighbourMines;
     }
 
-	public override void Reveal ( Button button )
+    public override void Reveal ( Button button )
     {
-        base.Reveal ( button );
-        Console.WriteLine ( "Game Over" );
+        if ( button.Tag is Cell cell )
+        {
+            if ( cell.IsFlagged ) //maybe _isRevealed is not necessary
+            {
+                return;
+            }
+            button.Content = _symbol;
+            button.Background = Avalonia.Media.Brushes.Red;
+        }
+    }
+
+    public override void Flag ( Button button )
+    {
+        return;
     }
 }
