@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Media.Imaging;
 
 public class Mine : Cell
 {
@@ -23,7 +24,15 @@ public class Mine : Cell
             {
                 return;
             }
-            button.Content = _symbol;
+
+            var image = new Image
+            {
+                Source = new Bitmap("C:/Users/gusta/Documents/GitHub/Minesweeper-gui-/Minesweeper (gui)/Mine.png"),
+                Width = button.Width - 8,
+                Height = button.Height - 8
+            };
+
+            button.Content = image;
             button.Background = Avalonia.Media.Brushes.Red;
         }
     }

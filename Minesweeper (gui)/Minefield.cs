@@ -113,17 +113,22 @@ public class Minefield
         }
     }
 
-    private Button CreateCellButton ( MainWindow window, int x, int y, Cell cell)
+    private Button CreateCellButton ( MainWindow window, int x, int y, Cell cell )
     {
         Button button = new Button
         {
-            Content = " ",
-            Width = 35,
-            Height = 35,
+            Content = "#",
+            Width = 32,
+            Height = 32,
             Tag = cell,
-            Margin = new Avalonia.Thickness ( 5 ),
-            Background = ClosedCell.Color
+            Margin = new Avalonia.Thickness ( 0 ),
+            Background = ClosedCell.Color,
+            HorizontalContentAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+            VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Center,
+            FontSize = 5
+          
         };
+
 
         button.Click += window.CellClickHandler;
         button.PointerReleased += window.CellRightClickHandler;

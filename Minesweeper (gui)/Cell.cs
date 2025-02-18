@@ -1,4 +1,6 @@
 using Avalonia.Controls;
+using Avalonia.Media.Imaging;
+using System;
 
 public abstract class Cell : Button, IFlag
 {
@@ -43,8 +45,15 @@ public abstract class Cell : Button, IFlag
             }
             else
             {
+                var image = new Image
+                {
+                    Source = new Bitmap("C:/Users/gusta/Documents/GitHub/Minesweeper-gui-/Minesweeper (gui)/Flag.png"),
+                    Width = button.Width - 8,
+                    Height = button.Height - 8
+                };
+
                 cell.IsFlagged = true;
-                button.Content = "F";
+                button.Content = image;
             }
         }
     }
