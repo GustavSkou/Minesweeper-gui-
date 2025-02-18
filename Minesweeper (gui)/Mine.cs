@@ -1,44 +1,34 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Media.Imaging;
 
 public class Mine : Cell
 {
     public Mine ( Cell cell )
     {
+        Image = cell.Image;
+
         _x = cell.X;
         _y = cell.Y;
 
-        _symbol = "¤";
-
-        _isMine = true;
         _isFlagged = cell.IsFlagged;
-        _isRevealed = cell.IsRevealed;
-        _neighbourMines = cell.NeighbourMines;
     }
 
-    public override void Reveal ( Button button )
+    public override void LeftClick ( Button button )
     {
         if ( button.Tag is Cell cell )
         {
-            if ( cell.IsFlagged ) //maybe _isRevealed is not necessary
-            {
+            if ( cell.IsFlagged || cell is OpenCell )
                 return;
-            }
 
-            var image = new Image
+            try
             {
-                Source = new Bitmap("content/mine.png"),
-                Width = button.Width - 8,
-                Height = button.Height - 8
-            };
-
-            button.Content = image;
-            button.Background = Avalonia.Media.Brushes.Red;
+                button.Content = GetImage ( cell );
+            }
+            catch
+            {
+                throw new System.Exception ( "Mine exception" );
+            }
         }
-    }
 
-    public override void Flag ( Button button )
-    {
-        return;
+        //stop game
     }
 }

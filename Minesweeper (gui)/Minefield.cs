@@ -106,9 +106,6 @@ public class Minefield
                         }
                     }
                 }
-                cells[row, column].Symbol = cells[row, column].NeighbourMines > 0 ? 
-                    cells[row, column].NeighbourMines.ToString () : 
-                    cells[row, column].Symbol;
             }
         }
     }
@@ -117,18 +114,15 @@ public class Minefield
     {
         Button button = new Button
         {
-            Content = "#",
-            Width = 32,
-            Height = 32,
+            Content = cell.Image,
+            Width = Cell.Width,
+            Height = Cell.Height,
             Tag = cell,
             Margin = new Avalonia.Thickness ( 0 ),
-            Background = ClosedCell.Color,
+            
             HorizontalContentAlignment = Avalonia.Layout.HorizontalAlignment.Center,
-            VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Center,
-            FontSize = 5
-          
+            VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Center,          
         };
-
 
         button.Click += window.CellClickHandler;
         button.PointerReleased += window.CellRightClickHandler;

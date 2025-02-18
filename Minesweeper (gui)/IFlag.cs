@@ -2,5 +2,5 @@
 
 public interface IFlag
 {
-    void Flag (Button button);
+    void RightClick (Button button);
 }

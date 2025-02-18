@@ -14,27 +14,22 @@ namespace Minesweeper__gui_
 
         public void CellClickHandler ( object? sender, RoutedEventArgs args )
         {
+            // Checks both if cell is flagged and if cell is already revealed
+            // Then it sets revealed to true, 
+            // If it's a mine the override LeftClick method will be called
+
             if ( sender is Button button)
-            {
                 if ( button.Tag is Cell cell)
-                {
-                    // Checks both if cell is flagged and if cell is already revealed
-                    // Then it sets revealed to true, 
-                    // If it's a mine the override Reveal method will be called
-                    cell.Reveal (button);
-                }
-            }
+                    cell.LeftClick (button);
         }
 
         public void CellRightClickHandler ( object? sender, RoutedEventArgs args )
         {
+
+
             if ( sender is Button button )
-            {
                 if ( button.Tag is Cell cell )
-                {
-                    cell.Flag ( button );
-                }
-            }
+                    cell.RightClick ( button );
         }
     }
 }
