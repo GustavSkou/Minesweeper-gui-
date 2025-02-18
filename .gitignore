@@ -14,15 +14,19 @@
 # Build results
 
 *.sln.ide/
-[Dd]ebug/
 [Rr]elease/
 x64/
-[Bb]in/
 [Oo]bj/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
+
+*.dll
+*.json
+*.exe
+*.dylib
+*.so
 
 *_i.c
 *_p.c

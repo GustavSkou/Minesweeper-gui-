@@ -27,7 +27,7 @@ public class Mine : Cell
 
             var image = new Image
             {
-                Source = new Bitmap("C:/Users/gusta/Documents/GitHub/Minesweeper-gui-/Minesweeper (gui)/Mine.png"),
+                Source = new Bitmap("content/mine.png"),
                 Width = button.Width - 8,
                 Height = button.Height - 8
             };

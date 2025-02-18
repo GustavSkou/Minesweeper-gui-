@@ -4,9 +4,14 @@ using System;
 
 public abstract class Cell : Button, IFlag
 {
+    private string _contentPath = "C:/Users/gusta/Documents/GitHub/Minesweeper-gui-/Minesweeper (gui)/content/flag.png";
+
+
     protected int _x, _y, _neighbourMines;
     protected bool _isMine, _isFlagged, _isRevealed;
     protected string _symbol;
+
+
 
     public int X { get { return _x; } }
     public int Y { get { return _y; } }
@@ -47,7 +52,7 @@ public abstract class Cell : Button, IFlag
             {
                 var image = new Image
                 {
-                    Source = new Bitmap("C:/Users/gusta/Documents/GitHub/Minesweeper-gui-/Minesweeper (gui)/Flag.png"),
+                    Source = new Bitmap("content/flag.png"),
                     Width = button.Width - 8,
                     Height = button.Height - 8
                 };
