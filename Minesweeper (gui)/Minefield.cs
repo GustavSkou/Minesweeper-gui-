@@ -13,6 +13,22 @@ public class Minefield
     private static Minefield _instance = new Minefield( 9, 9, 10);
     public static Minefield Instance { get { return _instance; } }
 
+    public int Height
+    {
+        get { return _height; }
+    }
+
+    public int Width
+    {
+        get { return _height; }
+    }
+
+    public Cell[,] Cells 
+    {
+        get { return cells; }
+        set { cells = value; }
+    }
+
     private Minefield(int height, int width, int mines)
 	{
         _height = height;
@@ -27,8 +43,6 @@ public class Minefield
         SetCells ( cells );
         SetMines ( cells );
         SetNumbers ( cells );
-
-
     }
 
     public void Draw( MainWindow window )
@@ -40,7 +54,8 @@ public class Minefield
             for ( int column = 0; column < _width; column++ )
             {
                 Button button = CreateCellButton ( window, row, column, cells[row, column] );
-                
+                cells[row, column].ButtonInstance = button;     //add button instance to the cell
+
                 grid.Children.Add ( button );
                 grid.Height = _height * (button.Height + button.Margin.Top + button.Margin.Bottom );
                 grid.Width = _width * ( button.Width + button.Margin.Right + button.Margin.Left );
@@ -130,11 +145,25 @@ public class Minefield
             VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Center,          
         };
 
-        //button.Click += window.CellClickHandler;
-        button.PointerReleased += window.CellRightClickHandler;
-        button.
-
+        button.Click += window.CellClickHandler;
+        button.PointerPressed += ( sender, e ) =>
+        {
+            if( e.GetCurrentPoint ( button ).Properties.IsLeftButtonPressed )
+            {
+                window.CellClickHandler ( sender, e );
+            }
+            else if ( e.GetCurrentPoint ( button ).Properties.IsRightButtonPressed )
+            {
+                window.CellRightClickHandler ( sender, e );
+            }
+        };
+            
         return button;
+    }
+
+    private void Button_PointerReleased ( object? sender, Avalonia.Input.PointerReleasedEventArgs e )
+    {
+        throw new NotImplementedException ();
     }
 
     private Grid? GetGrid ( MainWindow window )

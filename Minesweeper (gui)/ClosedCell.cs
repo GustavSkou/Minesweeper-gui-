@@ -2,7 +2,7 @@
 
 public class ClosedCell : Cell
 {
-    public ClosedCell ( int x, int y )
+    public ClosedCell ( int x, int y)
     {
         Image = GetImage ( this );
 

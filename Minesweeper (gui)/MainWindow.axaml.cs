@@ -29,5 +29,12 @@ namespace Minesweeper__gui_
                 if ( button.Tag is Cell cell )
                     cell.RightClick ( button );
         }
+
+        public void CellLeftAndRightClickHandler (object? sender, RoutedEventArgs args)
+        {
+            if ( sender is Button button )
+                if ( button.Tag is Cell cell )
+                    cell.LeftAndRightClick ( button );
+        }
     }
 }

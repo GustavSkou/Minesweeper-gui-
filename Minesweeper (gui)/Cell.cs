@@ -8,13 +8,18 @@ public abstract class Cell : IFlag
 
     protected int _x, _y, _neighbourMines;
     protected bool _isFlagged;
+    protected Button _buttonInstance;
 
     public static int Height = 20;  
     public static int Width = 20;
 
     public int X { get { return _x; } } // currently not in use
     public int Y { get { return _y; } } // currently not in use
-
+    public Button ButtonInstance
+    {
+        get { return _buttonInstance; }
+        set { _buttonInstance = value; }
+    }
     public int NeighbourMines 
     { 
         get { return _neighbourMines; } 
@@ -52,12 +57,15 @@ public abstract class Cell : IFlag
             
             try
             {
-                button.Content = GetImage ( (OpenCell) button.Tag );
+                cell.Image = GetImage ( ( (OpenCell) button.Tag ) );
+                button.Content = Image;
             }
             catch
             {
                 button.Content = " ";
-            }            
+            }
+
+            OpenSurroundingCells ( button );
         }
     }
 
@@ -71,16 +79,16 @@ public abstract class Cell : IFlag
         if ( cell.IsFlagged )
         {
             cell.IsFlagged = false;
-            button.Content = " ";
+            button.Content = cell.Image;
         }
         else
         {
             cell.IsFlagged = true;
-            button.Content = GetImage(cell);
+            button.Content = GetImage( cell );
         }
     }
 
-    public virtual void LeftAndRightClick( Button button)
+    public virtual void LeftAndRightClick( Button button )
     { }
 
     protected Image GetImage ( Cell cell )
@@ -92,6 +100,36 @@ public abstract class Cell : IFlag
             Height = GetImageHeight(cell)
         };
         return image;
+    }
+
+    protected void OpenSurroundingCells( Button button )
+    {
+        if (button.Tag is Cell cell)
+        {
+
+
+            if ( cell.NeighbourMines == 0 )
+            {
+                int x = cell.X;
+                int y = cell.Y;
+
+                for (int rowIndex = x - 1; rowIndex < x + 1; rowIndex++ )
+                {
+                    if (rowIndex < 0 || rowIndex > Minefield.Instance.Height)
+                    for (int columnIndex = y - 1; columnIndex < y + 1; columnIndex++ )
+                    {
+                        if ( rowIndex == x && columnIndex == y )    // Skip itself
+                            continue;
+
+
+
+                        Minefield.Instance.Cells[rowIndex, columnIndex].LeftClick (
+                            Minefield.Instance.Cells[rowIndex, columnIndex].ButtonInstance
+                            );
+                    }
+                }
+            }
+        }
     }
 
     protected string SelectImage ( Cell cell )
@@ -110,7 +148,7 @@ public abstract class Cell : IFlag
 
     protected double GetImageHeight(Cell cell)
     {
-        if (cell is ClosedCell)
+        if (cell is ClosedCell && !cell.IsFlagged)
             return Height;
         else
             return Height * 0.6;
@@ -118,7 +156,7 @@ public abstract class Cell : IFlag
 
     protected double GetImageWidth(Cell cell)
     {
-        if (cell is ClosedCell)
+        if (cell is ClosedCell && !cell.IsFlagged )
             return Width;
         else
             return Width * 0.6;
