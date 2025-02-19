@@ -50,22 +50,31 @@ public abstract class Cell : IFlag
     {
         if ( button.Tag is Cell cell )
         {
-            if ( cell.IsFlagged || cell is OpenCell)
+            if ( cell.IsFlagged || cell is OpenCell )
                 return;
-            
             button.Tag = new OpenCell ( cell );
-            
-            try
-            {
-                cell.Image = GetImage ( ( (OpenCell) button.Tag ) );
-                button.Content = Image;
-            }
-            catch
-            {
-                button.Content = " ";
-            }
+            Minefield.Instance.Cells[1, 1].LeftClick ( Minefield.Instance.Cells[1, 1].ButtonInstance );
 
-            OpenSurroundingCells ( button );
+            
+
+            //if ( button.Tag is Cell cell )
+            //{
+            //    if ( cell.IsFlagged || cell is OpenCell)
+            //        return;
+
+            //    button.Tag = new OpenCell ( cell );
+
+            //    try
+            //    {
+            //        cell.Image = GetImage ( ( (OpenCell) button.Tag ) );
+            //        button.Content = Image;
+            //        //OpenSurroundingCells ( button );
+            //    }
+            //    catch
+            //    {
+            //        button.Content = " ";
+            //        //OpenSurroundingCells ( button );
+            //    }
         }
     }
 
@@ -106,8 +115,6 @@ public abstract class Cell : IFlag
     {
         if (button.Tag is Cell cell)
         {
-
-
             if ( cell.NeighbourMines == 0 )
             {
                 int x = cell.X;
@@ -121,11 +128,9 @@ public abstract class Cell : IFlag
                         if ( rowIndex == x && columnIndex == y )    // Skip itself
                             continue;
 
+                        if ( rowIndex < 0 || rowIndex > Minefield.Instance.Height || columnIndex < 0 || columnIndex > Minefield.Instance.Width )
 
-
-                        Minefield.Instance.Cells[rowIndex, columnIndex].LeftClick (
-                            Minefield.Instance.Cells[rowIndex, columnIndex].ButtonInstance
-                            );
+                        Minefield.Instance.Cells [rowIndex, columnIndex].LeftClick ( Minefield.Instance.Cells[rowIndex, columnIndex].ButtonInstance );
                     }
                 }
             }
