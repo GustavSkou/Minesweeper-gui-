@@ -25,8 +25,6 @@ namespace Minesweeper__gui_
 
         public void CellRightClickHandler ( object? sender, RoutedEventArgs args )
         {
-
-
             if ( sender is Button button )
                 if ( button.Tag is Cell cell )
                     cell.RightClick ( button );

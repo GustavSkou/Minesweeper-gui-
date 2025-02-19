@@ -5,6 +5,7 @@ using System;
 public class Minefield
 {
     private int _height, _width, _mines;
+    
 
     private Cell[,] cells;
 
@@ -26,6 +27,8 @@ public class Minefield
         SetCells ( cells );
         SetMines ( cells );
         SetNumbers ( cells );
+
+
     }
 
     public void Draw( MainWindow window )
@@ -46,6 +49,9 @@ public class Minefield
                 Grid.SetColumn ( button, column );
             }
         }
+
+        window.Height = _height * Cell.Height;  //should not be here 
+        window.Width = _width * Cell.Width;
     }
 
     private void SetCells( Cell[,] cells)
@@ -124,8 +130,9 @@ public class Minefield
             VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Center,          
         };
 
-        button.Click += window.CellClickHandler;
+        //button.Click += window.CellClickHandler;
         button.PointerReleased += window.CellRightClickHandler;
+        button.
 
         return button;
     }

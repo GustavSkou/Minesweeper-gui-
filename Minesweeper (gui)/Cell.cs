@@ -9,8 +9,8 @@ public abstract class Cell : IFlag
     protected int _x, _y, _neighbourMines;
     protected bool _isFlagged;
 
-    public static int Height = 32;  
-    public static int Width = 32;
+    public static int Height = 20;  
+    public static int Width = 20;
 
     public int X { get { return _x; } } // currently not in use
     public int Y { get { return _y; } } // currently not in use
@@ -52,7 +52,7 @@ public abstract class Cell : IFlag
             
             try
             {
-                button.Content = GetImage ( (Cell) button.Tag );
+                button.Content = GetImage ( (OpenCell) button.Tag );
             }
             catch
             {
@@ -80,13 +80,16 @@ public abstract class Cell : IFlag
         }
     }
 
+    public virtual void LeftAndRightClick( Button button)
+    { }
+
     protected Image GetImage ( Cell cell )
     {
         var image = new Image
         {
             Source = new Bitmap( SelectImage( cell ) ),
-            Width = cell is not ClosedCell ? Width - 8 : Width,
-            Height = cell is not ClosedCell ? Height - 8 : Height
+            Width = GetImageWidth(cell),
+            Height = GetImageHeight(cell)
         };
         return image;
     }
@@ -103,5 +106,21 @@ public abstract class Cell : IFlag
             return _contentPath + "closed.png";
         
         return $"{_contentPath}{NumberStringpairs[cell.NeighbourMines]}.png";
+    }
+
+    protected double GetImageHeight(Cell cell)
+    {
+        if (cell is ClosedCell)
+            return Height;
+        else
+            return Height * 0.6;
+    }
+
+    protected double GetImageWidth(Cell cell)
+    {
+        if (cell is ClosedCell)
+            return Width;
+        else
+            return Width * 0.6;
     }
 }
