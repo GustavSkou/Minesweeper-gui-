@@ -10,8 +10,8 @@ public abstract class Cell : IFlag
     protected bool _isFlagged;
     protected Button _buttonInstance;
 
-    public static int Height = 20;  
-    public static int Width = 20;
+    public static int Height = 40;  
+    public static int Width = 40;
 
     public int X { get { return _x; } } // currently not in use
     public int Y { get { return _y; } } // currently not in use
@@ -52,29 +52,21 @@ public abstract class Cell : IFlag
         {
             if ( cell.IsFlagged || cell is OpenCell )
                 return;
+
             button.Tag = new OpenCell ( cell );
-            Minefield.Instance.Cells[1, 1].LeftClick ( Minefield.Instance.Cells[1, 1].ButtonInstance );
 
+            try
+            {
+                cell.Image = GetImage ( ( (OpenCell) button.Tag ) );
+                button.Content = Image;
+                OpenSurroundingCells ( button );
+            }
+            catch
+            {
+                button.Content = " ";
+                OpenSurroundingCells ( button );
+            }
             
-
-            //if ( button.Tag is Cell cell )
-            //{
-            //    if ( cell.IsFlagged || cell is OpenCell)
-            //        return;
-
-            //    button.Tag = new OpenCell ( cell );
-
-            //    try
-            //    {
-            //        cell.Image = GetImage ( ( (OpenCell) button.Tag ) );
-            //        button.Content = Image;
-            //        //OpenSurroundingCells ( button );
-            //    }
-            //    catch
-            //    {
-            //        button.Content = " ";
-            //        //OpenSurroundingCells ( button );
-            //    }
         }
     }
 
@@ -117,20 +109,23 @@ public abstract class Cell : IFlag
         {
             if ( cell.NeighbourMines == 0 )
             {
-                int x = cell.X;
-                int y = cell.Y;
-
-                for (int rowIndex = x - 1; rowIndex < x + 1; rowIndex++ )
+                for (int rowIndex = cell.X - 1; rowIndex <= cell.X + 1; rowIndex++ )
                 {
-                    if (rowIndex < 0 || rowIndex > Minefield.Instance.Height)
-                    for (int columnIndex = y - 1; columnIndex < y + 1; columnIndex++ )
+                    if ( rowIndex < 0 || rowIndex >= Minefield.Instance.Height )
+                        continue;
+
+                    for (int columnIndex = cell.Y - 1; columnIndex <= cell.Y + 1; columnIndex++ )
                     {
-                        if ( rowIndex == x && columnIndex == y )    // Skip itself
+                        if ( rowIndex == cell.X && columnIndex == cell.Y )    // Skip itself
                             continue;
 
-                        if ( rowIndex < 0 || rowIndex > Minefield.Instance.Height || columnIndex < 0 || columnIndex > Minefield.Instance.Width )
+                        if ( columnIndex < 0 || columnIndex >= Minefield.Instance.Width )
+                            continue;
 
-                        Minefield.Instance.Cells [rowIndex, columnIndex].LeftClick ( Minefield.Instance.Cells[rowIndex, columnIndex].ButtonInstance );
+                        Cell surroundingCell = Minefield.Instance.Cells [rowIndex, columnIndex];
+
+                        if ( surroundingCell.ButtonInstance.Tag is not OpenCell)
+                            surroundingCell.LeftClick ( surroundingCell.ButtonInstance );
                     }
                 }
             }

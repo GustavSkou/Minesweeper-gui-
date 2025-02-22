@@ -53,7 +53,7 @@ public class Minefield
         {
             for ( int column = 0; column < _width; column++ )
             {
-                Button button = CreateCellButton ( window, row, column, cells[row, column] );
+                Button button = CreateCellButton ( window, cells[row, column] );
                 cells[row, column].ButtonInstance = button;     //add button instance to the cell
 
                 grid.Children.Add ( button );
@@ -83,10 +83,9 @@ public class Minefield
     private void SetMines ( Cell[,] cells )
     {
         Random random = new Random();
-        int[ , ] minesCoordinates = new int[ _mines, 2 ];
 
         int placedMines = 0;
-        while (placedMines < 10)
+        while (placedMines < _mines )
         {
             int row = random.Next ( 0, _height );
             int column = random.Next ( 0, _width );
@@ -131,7 +130,7 @@ public class Minefield
         }
     }
 
-    private Button CreateCellButton ( MainWindow window, int x, int y, Cell cell )
+    private Button CreateCellButton ( MainWindow window, Cell cell )
     {
         Button button = new Button
         {
@@ -140,7 +139,7 @@ public class Minefield
             Height = Cell.Height,
             Tag = cell,
             Margin = new Avalonia.Thickness ( 0 ),
-            
+            //Name = cell.X + "," + cell.Y,
             HorizontalContentAlignment = Avalonia.Layout.HorizontalAlignment.Center,
             VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Center,          
         };

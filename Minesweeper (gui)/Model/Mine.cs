@@ -44,6 +44,14 @@ public class Mine : Cell
         //stop game
     }
 
+    public override void RightClick ( Button button )
+    {
+        if ( _exploded )
+            return;
+
+        base.RightClick ( button );
+    }
+
     private void Explode ()
     {
         _exploded = true;
