@@ -4,7 +4,7 @@ public class ClosedCell : Cell
 {
     public ClosedCell ( int x, int y)
     {
-        Image = GetImage ( this );
+        Image = RevealImage ( this );
 
         _x = x;
         _y = y;

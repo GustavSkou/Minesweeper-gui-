@@ -32,7 +32,7 @@ public class Mine : Cell
 
             try
             {
-                mine.Image = GetImage ( (Cell) mine );
+                mine.Image = RevealImage ( (Cell) mine );
             }
             catch
             {

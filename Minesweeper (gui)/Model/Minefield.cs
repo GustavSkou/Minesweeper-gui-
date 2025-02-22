@@ -10,7 +10,7 @@ public class Minefield
     private Cell[,] cells;
 
     /* Singleton */
-    private static Minefield _instance = new Minefield( 9, 9, 10);
+    private static Minefield _instance = new Minefield( 9, 9, 1);
     public static Minefield Instance { get { return _instance; } }
 
     public int Height
