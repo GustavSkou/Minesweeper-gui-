@@ -5,12 +5,11 @@ using System;
 public class Minefield
 {
     private int _height, _width, _mines;
-    
-
+   
     private Cell[,] cells;
 
     /* Singleton */
-    private static Minefield _instance = new Minefield( 9, 9, 1);
+    private static Minefield _instance = new Minefield( 9, 9, 10);
     public static Minefield Instance { get { return _instance; } }
 
     public int Height
@@ -35,14 +34,10 @@ public class Minefield
         _width = width;
         _mines = mines;
 
-        // Create a 2D array of cells
-        // Set the mines
-        // Set the number
-
         cells = new Cell[_height, _width];
         SetCells ( cells );
         SetMines ( cells );
-        SetNumbers ( cells );
+        SetNeighborMineNumbers ( cells );
     }
 
     public void Draw( MainWindow window )
@@ -64,9 +59,14 @@ public class Minefield
                 Grid.SetColumn ( button, column );
             }
         }
+    }
 
-        window.Height = _height * Cell.Height;  //should not be here 
-        window.Width = _width * Cell.Width;
+    public void ResetMinefield ( MainWindow window )
+    {
+        SetCells ( cells );
+        SetMines ( cells );
+        SetNeighborMineNumbers ( cells );
+        Draw (window);
     }
 
     private void SetCells( Cell[,] cells)
@@ -98,7 +98,7 @@ public class Minefield
         }
     }
 
-    private void SetNumbers ( Cell[,] cells )
+    private void SetNeighborMineNumbers ( Cell[,] cells )
     {
         //Go though each cell in cells
         for ( int row = 0; row < _height; row++ )
@@ -106,7 +106,8 @@ public class Minefield
             for ( int column = 0; column < _width; column++ )
             {
                 // Don't count around a mine
-                if ( cells[row, column] is Mine) continue;
+                if ( cells[row, column] is Mine) 
+                    continue;
 
                 // Go through each cell in the 3x3 grid around the cell
                 for ( int x = row - 1; x <= row + 1; x++ )
@@ -117,7 +118,8 @@ public class Minefield
                         if ( x >= 0 && x < _height && y >= 0 && y < _width )    
                         {
                             // Skip the cell itself
-                            if ( x == row && y == column) continue;     
+                            if ( x == row && y == column) 
+                                continue;     
                         
                             if ( cells[x, y] is Mine )
                             {
@@ -139,7 +141,6 @@ public class Minefield
             Height = Cell.Height,
             Tag = cell,
             Margin = new Avalonia.Thickness ( 0 ),
-            //Name = cell.X + "," + cell.Y,
             HorizontalContentAlignment = Avalonia.Layout.HorizontalAlignment.Center,
             VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Center,          
         };
@@ -167,13 +168,8 @@ public class Minefield
 
     private Grid? GetGrid ( MainWindow window )
     {
-        var grid = window.FindControl<Grid> ( "MinefieldGrid" );
-
-        if ( grid == null )
-        {
-            throw new InvalidOperationException ( "MinefieldGrid not found in the window." );
-        }
-
+        var grid =  window.FindControl<Grid> ( "MinefieldGrid" )  ?? throw new InvalidOperationException ( "MinefieldGrid not found in the window." );
+        grid.Children.Clear ();
         grid.RowDefinitions.Clear ();
         grid.ColumnDefinitions.Clear ();
 

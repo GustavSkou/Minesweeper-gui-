@@ -41,7 +41,6 @@ public class Mine : Cell
 
             button.Content = mine.Image;
         }
-        //stop game
     }
 
     public override void RightClick ( Button button )
@@ -55,5 +54,6 @@ public class Mine : Cell
     private void Explode ()
     {
         _exploded = true;
+        GameStateButton.Instance.DeadState ();
     }
 }

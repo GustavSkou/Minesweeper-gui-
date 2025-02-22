@@ -4,29 +4,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Minesweeper__gui_.MainWindow"
-        Title="Minesweeper__gui_"
-        >
-    <Window.Styles>
-      <Style Selector="Button.no-hover">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Template">
-          <ControlTemplate>
-            <Border Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}">
-              <ContentPresenter HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
-            </Border>
-          </ControlTemplate>
-        </Setter>
-      </Style>
-    </Window.Styles>
+        Title="Minesweeper__gui_">
 
-  <Grid Name="MinefieldGrid" HorizontalAlignment="Center" Background="" >
+  <StackPanel Name="GameContainer" Background="AliceBlue" HorizontalAlignment="Center">
+    <StackPanel Name="TopPanel" Background="Red" Orientation="Horizontal">
 
-    
-  </Grid> <!-- This is where the minefield will be drawn -->
-  
+    </StackPanel>
+    <Grid Name="MinefieldGrid"></Grid>
+
+  </StackPanel>
   
 </Window>

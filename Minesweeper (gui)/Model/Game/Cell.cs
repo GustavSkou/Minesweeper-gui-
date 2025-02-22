@@ -99,12 +99,9 @@ public abstract class Cell : IFlag
 
                         if ( Minefield.Instance.Cells[rowIndex, columnIndex] is OpenCell )
                             continue;
-                        
 
-                        Cell surroundingCell = Minefield.Instance.Cells [rowIndex, columnIndex];
-
-                        if ( surroundingCell.ButtonInstance.Tag is not OpenCell)
-                            surroundingCell.LeftClick ( surroundingCell.ButtonInstance );
+                        Cell surroundingCell = Minefield.Instance.Cells [rowIndex, columnIndex];    
+                        surroundingCell.LeftClick ( surroundingCell.ButtonInstance );
                     }
                 }
             }

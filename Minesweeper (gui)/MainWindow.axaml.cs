@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using System;
+using System.ComponentModel;
 
 namespace Minesweeper__gui_
 {
@@ -9,7 +10,12 @@ namespace Minesweeper__gui_
         public MainWindow ()
         {
             InitializeComponent ();
+            Height = Minefield.Instance.Height * Cell.Height + Cell.Height;
+            Width = Minefield.Instance.Width * Cell.Width;
+
+            GameStateButton.Instance.Draw ( this );
             Minefield.Instance.Draw ( this );
+
         }
 
         public void CellClickHandler ( object? sender, RoutedEventArgs args )
@@ -35,6 +41,13 @@ namespace Minesweeper__gui_
             if ( sender is Button button )
                 if ( button.Tag is Cell cell )
                     cell.LeftAndRightClick ( button );
+        }
+
+        public void RestartClickHandler (Object? sender, RoutedEventArgs args)
+        {
+            if ( sender is Button button )
+                if ( button.Tag is IRestart restartbutton )
+                    restartbutton.RestartGame (this);
         }
     }
 }
