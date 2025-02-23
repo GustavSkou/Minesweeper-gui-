@@ -40,7 +40,7 @@ public class Minefield
         SetNeighborMineNumbers ( cells );
     }
 
-    public void Draw( MainWindow window )
+    public void Draw( GameWindow window )
     {
         var grid = GetGrid ( window );
 
@@ -61,7 +61,7 @@ public class Minefield
         }
     }
 
-    public void ResetMinefield ( MainWindow window )
+    public void ResetMinefield ( GameWindow window )
     {
         SetCells ( cells );
         SetMines ( cells );
@@ -132,7 +132,7 @@ public class Minefield
         }
     }
 
-    private Button CreateCellButton ( MainWindow window, Cell cell )
+    private Button CreateCellButton ( GameWindow window, Cell cell )
     {
         Button button = new Button
         {
@@ -166,7 +166,7 @@ public class Minefield
         throw new NotImplementedException ();
     }
 
-    private Grid? GetGrid ( MainWindow window )
+    private Grid? GetGrid ( GameWindow window )
     {
         var grid =  window.FindControl<Grid> ( "MinefieldGrid" )  ?? throw new InvalidOperationException ( "MinefieldGrid not found in the window." );
         grid.Children.Clear ();

@@ -2,7 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using System.Collections.Generic;
 
-public abstract class Cell : IFlag
+public abstract class Cell : IClickable
 {
     protected int _x, _y, _neighbourMines;
     protected bool _isFlagged;

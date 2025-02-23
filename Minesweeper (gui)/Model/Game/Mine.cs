@@ -51,9 +51,9 @@ public class Mine : Cell
         base.RightClick ( button );
     }
 
-    private void Explode ()
+    private void Explode (GameStateButton gameStateButton)
     {
         _exploded = true;
-        GameStateButton.Instance.DeadState ();
+        gameStateButton.SetDeadState ();
     }
 }

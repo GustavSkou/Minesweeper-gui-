@@ -2,58 +2,70 @@ using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Minesweeper__gui_;
 
-public class GameStateButton : IRestart
+public class GameStateButton : IClickable
 {
 	private bool _state;
 	private static readonly string _contentPath = "content/";
-	Image image;
-	Button buttonInstance;
+	Image image;			// Current image displayed
+	Button buttonInstance;	// Button instance that it is connected to
+	GameWindow _window;		// Window 
 
-	static private GameStateButton _instance = new GameStateButton();
-
-	static public GameStateButton Instance { get { return _instance; } }
+	/* singleton instance */
+	//static private GameStateButton _instance = new GameStateButton();
+	//static public GameStateButton Instance { get { return _instance; } }
 
 	public Button ButtonInstance
 	{
 		get { return buttonInstance; }
 	}
 
-	private GameStateButton ()
+	public GameStateButton ( GameWindow window )
 	{
-		_state = true;
+        _window = window;
+        _state = true;
 	}
 
-	public void AliveState()
+	private void SetAliveState()
 	{
 		_state = true;
 		SetImage ( _state );
 		buttonInstance.Content = image;
 	}
-	public void DeadState ()
+	public void SetDeadState ()
 	{
 		_state = false;
 		SetImage ( _state );
 		buttonInstance.Content = image;
 	}
-
-	public void RestartGame(MainWindow window)
+	
+	public void Draw()
 	{
-		Minefield.Instance.ResetMinefield ( window );
-		AliveState ();
-	}
-
-	public void Draw(MainWindow window)
-	{
-		var panel = window.FindControl<StackPanel>("TopPanel");
+		var panel = _window.FindControl<StackPanel>("TopPanel");
 		panel.HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center;
 
 		SetImage ( _state );
-		SetButton ( window );
+		SetButton ();
 
 		panel.Children.Add ( buttonInstance );
 	}
 
-	private void SetButton(MainWindow window)
+	public void LeftClick( Button button )
+	{
+		RestartGame();
+	}
+
+    public void RightClick ( Button button)
+    {
+		return;
+    }
+
+    private void RestartGame ()
+    {
+        Minefield.Instance.ResetMinefield ( _window );
+        SetAliveState ();
+    }
+
+    private void SetButton()
 	{
 		buttonInstance = new Button ()
 		{
@@ -64,7 +76,7 @@ public class GameStateButton : IRestart
 			Tag = this,
 			HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center
 		};
-		buttonInstance.Click += window.RestartClickHandler;
+		buttonInstance.Click += _window.RestartClickHandler;
 	}
 
 	private void SetImage ( bool state )
