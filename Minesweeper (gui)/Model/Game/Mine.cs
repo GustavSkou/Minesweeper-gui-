@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Media;
 
 public class Mine : Cell
 {
@@ -51,9 +52,12 @@ public class Mine : Cell
         base.RightClick ( button );
     }
 
-    private void Explode (GameStateButton gameStateButton)
+    private void Explode ()
     {
         _exploded = true;
-        gameStateButton.SetDeadState ();
+        //if (game is not over)
+            //_buttonInstance.Background = Brushes.Red;
+
+        GameStateButton.Instance.SetDeadState ();
     }
 }

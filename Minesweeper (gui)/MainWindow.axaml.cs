@@ -13,9 +13,7 @@ namespace Minesweeper__gui_
             Height = Minefield.Instance.Height * Cell.Height + Cell.Height;
             Width = Minefield.Instance.Width * Cell.Width;
 
-            GameStateButton gameStateButton = new GameStateButton(this);
-            gameStateButton.Draw ();
-
+            GameStateButton.Instance.Draw ( this );
 
 
             Minefield.Instance.Draw ( this );

@@ -2,7 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Minesweeper__gui_;
 
-public class GameStateButton : IClickable
+public class GameStateButton : IClickable , ISetDeadState
 {
 	private bool _state;
 	private static readonly string _contentPath = "content/";
@@ -11,17 +11,16 @@ public class GameStateButton : IClickable
 	GameWindow _window;		// Window 
 
 	/* singleton instance */
-	//static private GameStateButton _instance = new GameStateButton();
-	//static public GameStateButton Instance { get { return _instance; } }
+	static private GameStateButton _instance = new GameStateButton();
+	static public GameStateButton Instance { get { return _instance; } }
 
 	public Button ButtonInstance
 	{
 		get { return buttonInstance; }
 	}
 
-	public GameStateButton ( GameWindow window )
+	public GameStateButton (  )
 	{
-        _window = window;
         _state = true;
 	}
 
@@ -38,9 +37,11 @@ public class GameStateButton : IClickable
 		buttonInstance.Content = image;
 	}
 	
-	public void Draw()
+	public void Draw( GameWindow window )
 	{
-		var panel = _window.FindControl<StackPanel>("TopPanel");
+		_window = window;
+
+        var panel = _window.FindControl<StackPanel>("TopPanel");
 		panel.HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center;
 
 		SetImage ( _state );

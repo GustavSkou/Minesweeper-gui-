@@ -110,12 +110,6 @@ public abstract class Cell : IClickable
 
     protected Image RevealImage ( Cell cell )
     {
-        var image = new Image
-        {
-            Source = new Bitmap( CellContentHandler.SelectImage( cell ) ),
-            Width = CellContentHandler.GetImageWidth( cell ),
-            Height = CellContentHandler.GetImageHeight( cell )
-        };
-        return image;
+        return CellImage.SelectImage(cell);
     }
 }

@@ -8,7 +8,6 @@
 
   <StackPanel Name="GameContainer" Background="AliceBlue">
     <StackPanel Name="TopPanel" Background="Red" Orientation="Horizontal">
-      <TextBlock>123</TextBlock>
     </StackPanel>
     <Grid Name="MinefieldGrid"></Grid>
 
