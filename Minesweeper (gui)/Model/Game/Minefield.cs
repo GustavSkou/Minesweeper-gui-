@@ -5,22 +5,16 @@ using System;
 public class Minefield
 {
     private int _height, _width, _mines;
-   
     private Cell[,] cells;
+    private Grid _grid;
 
     /* Singleton */
     private static Minefield _instance = new Minefield( 9, 9, 10);
     public static Minefield Instance { get { return _instance; } }
 
-    public int Height
-    {
-        get { return _height; }
-    }
-
-    public int Width
-    {
-        get { return _height; }
-    }
+    public Grid Grid { get { return _grid; } }
+    public int Height { get { return _height; } }
+    public int Width { get { return _height; } }
 
     public Cell[,] Cells 
     {
@@ -35,15 +29,15 @@ public class Minefield
         _mines = mines;
 
         cells = new Cell[_height, _width];
+        _grid = CreateGrid ();
+                
         SetCells ( cells );
         SetMines ( cells );
         SetNeighborMineNumbers ( cells );
     }
 
-    public void Draw( GameWindow window )
+    public Grid CreateMinefieldGrid( GameWindow window )
     {
-        var grid = GetGrid ( window );
-
         for ( int row = 0; row < _height; row++ )
         {
             for ( int column = 0; column < _width; column++ )
@@ -51,14 +45,15 @@ public class Minefield
                 Button button = CreateCellButton ( window, cells[row, column] );
                 cells[row, column].ButtonInstance = button;     //add button instance to the cell
 
-                grid.Children.Add ( button );
-                grid.Height = _height * (button.Height + button.Margin.Top + button.Margin.Bottom );
-                grid.Width = _width * ( button.Width + button.Margin.Right + button.Margin.Left );
+                _grid.Children.Add ( button );
+                _grid.Height = _height * ( button.Height + button.Margin.Top + button.Margin.Bottom );
+                _grid.Width = _width * ( button.Width + button.Margin.Right + button.Margin.Left );
 
                 Grid.SetRow ( button, row );
                 Grid.SetColumn ( button, column );
             }
         }
+        return _grid;
     }
 
     public void ResetMinefield ( GameWindow window )
@@ -66,10 +61,11 @@ public class Minefield
         SetCells ( cells );
         SetMines ( cells );
         SetNeighborMineNumbers ( cells );
-        Draw (window);
+        ResetGrid ();
+        CreateMinefieldGrid ( window );
     }
 
-    private void SetCells( Cell[,] cells)
+    private void SetCells( Cell[,] cells )
     {
         for ( int row = 0; row < _height; row++ )
         {
@@ -166,23 +162,29 @@ public class Minefield
         throw new NotImplementedException ();
     }
 
-    private Grid? GetGrid ( GameWindow window )
+    private void ResetGrid()
     {
-        var grid =  window.FindControl<Grid> ( "MinefieldGrid" )  ?? throw new InvalidOperationException ( "MinefieldGrid not found in the window." );
-        grid.Children.Clear ();
-        grid.RowDefinitions.Clear ();
-        grid.ColumnDefinitions.Clear ();
+        _grid.Children.Clear ();
+    }
+
+    private Grid CreateGrid ()
+    {
+        _grid = new Grid ();
+        _grid.Name = "MinefieldGrid";
+        _grid.Children.Clear ();
+        _grid.RowDefinitions.Clear ();
+        _grid.ColumnDefinitions.Clear ();
 
         for ( int i = 0; i < _height; i++ )
         {
-            grid.RowDefinitions.Add ( new RowDefinition () );
+            _grid.RowDefinitions.Add ( new RowDefinition () );
         }
 
         for ( int i = 0; i < _width; i++ )
         {
-            grid.ColumnDefinitions.Add ( new ColumnDefinition () );
+            _grid.ColumnDefinitions.Add ( new ColumnDefinition () );
         }
 
-        return grid;
+        return _grid;
     }
 }

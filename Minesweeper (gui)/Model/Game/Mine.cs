@@ -58,6 +58,6 @@ public class Mine : Cell
         //if (game is not over)
             //_buttonInstance.Background = Brushes.Red;
 
-        GameStateButton.Instance.SetDeadState ();
+        //GameStateButton.Instance.SetDeadState ();
     }
 }

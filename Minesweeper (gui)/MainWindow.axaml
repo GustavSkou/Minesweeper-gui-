@@ -6,11 +6,10 @@
         x:Class="Minesweeper__gui_.GameWindow"
         Title="Minesweeper__gui_">
 
-  <StackPanel Name="GameContainer" Background="AliceBlue">
-    <StackPanel Name="TopPanel" Background="Red" Orientation="Horizontal">
-    </StackPanel>
-    <Grid Name="MinefieldGrid"></Grid>
-
-  </StackPanel>
+  <Grid
+    RowDefinitions="auto auto"
+    ColumnDefinitions="auto"
+    Name="GameContainer" Background="AliceBlue">    
+  </Grid>
   
 </Window>
