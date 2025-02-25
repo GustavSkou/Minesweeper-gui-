@@ -20,15 +20,10 @@ class GameContainer
     public void Draw ( GameWindow window )
     {
         PanelGrid panel = new PanelGrid();
-        GameStateButton gameStateButton = new GameStateButton(window);
-        GameStateButton gameStateButton2 = new GameStateButton(window);
-        GameStateButton gameStateButton3 = new GameStateButton(window);
-        panel.Add ( gameStateButton2.ButtonInstance, 1 );
-        panel.Add ( gameStateButton.ButtonInstance, 0 );
-        panel.Add ( gameStateButton3.ButtonInstance, 2 );
+        GameState gameState = new GameState(window);
+        panel.Add ( gameState.ButtonInstance, 0 );
 
         var minefieldGrid = Minefield.Instance.CreateMinefieldGrid ( window );
-
 
         _grid.Children.Add ( panel.Grid );
         Grid.SetRow ( panel.Grid, 0 );

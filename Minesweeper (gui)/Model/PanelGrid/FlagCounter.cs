@@ -5,10 +5,9 @@ public class FlagCounter
     GameWindow _window;
     int _counter;
 
-    public FlagCounter(GameWindow window)
+    public FlagCounter()
     {
         _counter = 0;
-        _window = window;
     }
 
     public void CounterUp()

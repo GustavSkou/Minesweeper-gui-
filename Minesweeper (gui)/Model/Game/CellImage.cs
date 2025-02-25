@@ -3,7 +3,7 @@ using Avalonia.Media.Imaging;
 
 public static class CellImage
 {
-    private static readonly string _contentPath = "content\\";
+    private static readonly string _contentPath = "content\\cell_image\\";
 
     public static Image One
     {
