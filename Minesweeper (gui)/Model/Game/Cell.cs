@@ -1,6 +1,4 @@
 using Avalonia.Controls;
-using Avalonia.Media.Imaging;
-using System.Collections.Generic;
 
 public abstract class Cell : IClickable
 {

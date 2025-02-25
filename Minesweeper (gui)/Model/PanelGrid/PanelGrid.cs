@@ -18,13 +18,26 @@ class PanelGrid
         _grid.Name = "PanelGrid";
     }
 
-    public void Add( Control Item , int column)
+    public void Add( Control item , int column)
     {
         column = column % 3;
 
-        _grid.Children.Add ( Item );
+        switch ( column )
+        {
+            case 0:
+            item.HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Left;
+            break;
+            case 1:
+            item.HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center;
+            break;
+            case 2:
+            item.HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Right;
+            break;
+        }
 
-        Grid.SetColumn ( Item, column );
+        _grid.Children.Add ( item );
+
+        Grid.SetColumn ( item, column );
     }
 
     private Grid CreateGrid ()

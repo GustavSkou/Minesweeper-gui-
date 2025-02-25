@@ -8,6 +8,8 @@ public class Minefield
     private Cell[,] cells;
     private Grid _grid;
 
+    public int Mines { get { return _mines; } }
+
     /* Singleton */
     private static Minefield _instance = new Minefield( 9, 9, 10);
     public static Minefield Instance { get { return _instance; } }

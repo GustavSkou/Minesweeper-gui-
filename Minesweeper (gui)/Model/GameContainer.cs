@@ -20,10 +20,17 @@ class GameContainer
     public void Draw ( GameWindow window )
     {
         PanelGrid panel = new PanelGrid();
+        
         GameState gameState = new GameState(window);
-        panel.Add ( gameState.ButtonInstance, 0 );
+        FlagCounter flagCounter = new FlagCounter(Minefield.Instance.Mines);
+        TimeCounter timeCounter = new TimeCounter();
 
         var minefieldGrid = Minefield.Instance.CreateMinefieldGrid ( window );
+
+        panel.Add ( gameState.ButtonInstance, 1 );
+        panel.Add ( flagCounter.StackPanel, 0 );
+        panel.Add ( timeCounter.StackPanel, 2);
+
 
         _grid.Children.Add ( panel.Grid );
         Grid.SetRow ( panel.Grid, 0 );
