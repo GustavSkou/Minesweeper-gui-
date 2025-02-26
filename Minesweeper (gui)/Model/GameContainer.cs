@@ -42,7 +42,6 @@ class GameContainer
     private Grid? GetGrid ( GameWindow window )
     {
         var grid =  window.FindControl<Grid> ( "GameContainer" )  ?? throw new InvalidOperationException ( "GameContainer not found in the window." );
-        grid.Background = new Avalonia.Media.SolidColorBrush ( Avalonia.Media.Colors.Blue );
         grid.Children.Clear ();
 
         return grid;

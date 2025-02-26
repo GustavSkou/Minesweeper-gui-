@@ -171,22 +171,21 @@ public class Minefield
 
     private Grid CreateGrid ()
     {
-        _grid = new Grid ();
-        _grid.Name = "MinefieldGrid";
-        _grid.Children.Clear ();
-        _grid.RowDefinitions.Clear ();
-        _grid.ColumnDefinitions.Clear ();
+        Grid grid = new Grid ()
+        {
+            Name = "MinefieldGrid",
+        };
 
         for ( int i = 0; i < _height; i++ )
         {
-            _grid.RowDefinitions.Add ( new RowDefinition () );
+            grid.RowDefinitions.Add ( new RowDefinition () );
         }
 
         for ( int i = 0; i < _width; i++ )
         {
-            _grid.ColumnDefinitions.Add ( new ColumnDefinition () );
+            grid.ColumnDefinitions.Add ( new ColumnDefinition () );
         }
 
-        return _grid;
+        return grid;
     }
 }

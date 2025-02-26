@@ -14,7 +14,6 @@ class PanelGrid
     public PanelGrid ()
     {
         _grid = CreateGrid ();
-        _grid.Background = new Avalonia.Media.SolidColorBrush ( Avalonia.Media.Colors.Red );
         _grid.Name = "PanelGrid";
     }
 
@@ -42,22 +41,25 @@ class PanelGrid
 
     private Grid CreateGrid ()
     {
-        var grid = new Grid ();
-        grid.Name = "PanelGrid";
-        grid.HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch;
-        grid.Children.Clear ();
-        grid.RowDefinitions.Clear ();
-        grid.ColumnDefinitions.Clear ();
-
-        for ( int row = 0; row < 1; row++ )
+        var grid = new Grid ()
         {
-            grid.RowDefinitions.Add ( new RowDefinition () );
-        }
+            Name = "PanelGrid",
+            HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
+            Background = Avalonia.Media.Brushes.Gray,
+            RowDefinitions = new Avalonia.Controls.RowDefinitions ("*"),
+            ColumnDefinitions = new Avalonia.Controls.ColumnDefinitions ("* * *"),
+        };
+        
 
-        for ( int column = 0; column < 3; column++ )
-        {
-            grid.ColumnDefinitions.Add ( new ColumnDefinition () );
-        }
+        //for ( int row = 0; row < 1; row++ )
+        //{
+        //    grid.RowDefinitions.Add ( new RowDefinition () );
+        //}
+
+        //for ( int column = 0; column < 3; column++ )
+        //{
+        //    grid.ColumnDefinitions.Add ( new ColumnDefinition () );
+        //}
 
         return grid;
     }

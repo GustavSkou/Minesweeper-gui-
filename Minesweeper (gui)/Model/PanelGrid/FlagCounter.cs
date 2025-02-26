@@ -1,6 +1,12 @@
 ﻿using Avalonia.Controls;
 
-public class FlagCounter
+interface IFlagCount
+{
+    void Up ();
+    void Down ();
+}
+
+public class FlagCounter : IFlagCount
 {
     private int _counter;
     private StackPanel _stackPanel;
@@ -12,17 +18,12 @@ public class FlagCounter
         _stackPanel = CreateStackPanel ();
         _counter = mines;
 
-        SetupCounter (_counter);
+        UpdateCounter ();
     }
 
-    private void SetupCounter(int mines)
+    private void UpdateCounter ()
     {
         int[] nums = ExtractCountNums();
-        UpdateCounter ( nums );
-    }
-
-    private void UpdateCounter ( int[] nums)
-    {
         _stackPanel.Children.Clear ();
         _stackPanel.Children.Add ( CounterImageHandler.GetImage ( nums[0] ) );
         _stackPanel.Children.Add ( CounterImageHandler.GetImage ( nums[1] ) );
@@ -38,14 +39,16 @@ public class FlagCounter
         ];
     }
 
-    public void CounterUp()
+    public void Up()
     {
         _counter++;
+        UpdateCounter ();
     }
 
-    public void CounterDown ()
+    public void Down ()
     {
         _counter--;
+        UpdateCounter ();
     }
 
     private StackPanel CreateStackPanel()
