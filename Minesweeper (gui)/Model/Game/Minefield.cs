@@ -2,17 +2,15 @@
 using Minesweeper__gui_;
 using System;
 
-public class Minefield
+public class Minefield : IMinefield, IRestartGame
 {
     private int _height, _width, _mines;
     private Cell[,] cells;
     private Grid _grid;
+    private IFlagCount _flagCounter;
+    private GameWindow _window;
 
     public int Mines { get { return _mines; } }
-
-    /* Singleton */
-    private static Minefield _instance = new Minefield( 9, 9, 10);
-    public static Minefield Instance { get { return _instance; } }
 
     public Grid Grid { get { return _grid; } }
     public int Height { get { return _height; } }
@@ -24,11 +22,13 @@ public class Minefield
         set { cells = value; }
     }
 
-    private Minefield(int height, int width, int mines)
+    public Minefield(int height, int width, int mines, GameWindow window, IFlagCount flagCounter)
 	{
         _height = height;
         _width = width;
         _mines = mines;
+        _flagCounter = flagCounter;
+        _window = window;
 
         cells = new Cell[_height, _width];
         _grid = CreateGrid ();
@@ -36,15 +36,16 @@ public class Minefield
         SetCells ( cells );
         SetMines ( cells );
         SetNeighborMineNumbers ( cells );
+        CreateMinefieldGrid ();
     }
 
-    public Grid CreateMinefieldGrid( GameWindow window )
+    public Grid CreateMinefieldGrid( )
     {
         for ( int row = 0; row < _height; row++ )
         {
             for ( int column = 0; column < _width; column++ )
             {
-                Button button = CreateCellButton ( window, cells[row, column] );
+                Button button = CreateCellButton ( cells[row, column] );
                 cells[row, column].ButtonInstance = button;     //add button instance to the cell
 
                 _grid.Children.Add ( button );
@@ -58,13 +59,13 @@ public class Minefield
         return _grid;
     }
 
-    public void ResetMinefield ( GameWindow window )
+    public void RestartGame ()
     {
         SetCells ( cells );
         SetMines ( cells );
         SetNeighborMineNumbers ( cells );
         ResetGrid ();
-        CreateMinefieldGrid ( window );
+        CreateMinefieldGrid ();
     }
 
     private void SetCells( Cell[,] cells )
@@ -73,7 +74,7 @@ public class Minefield
         {
             for ( int column = 0; column < _width; column++ )
             {
-                cells[row, column] = new ClosedCell ( row, column );
+                cells[row, column] = new ClosedCell ( row, column, _flagCounter, this );
             }
         }
     }
@@ -91,7 +92,7 @@ public class Minefield
             if ( cells[row, column] is not Mine )
             {
                 placedMines++;
-                cells[row, column] = new Mine ( cells[row, column] );
+                cells[row, column] = new Mine ( cells[row, column], _flagCounter, this );
             }            
         }
     }
@@ -130,7 +131,7 @@ public class Minefield
         }
     }
 
-    private Button CreateCellButton ( GameWindow window, Cell cell )
+    private Button CreateCellButton ( Cell cell )
     {
         Button button = new Button
         {
@@ -143,16 +144,16 @@ public class Minefield
             VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Center,          
         };
 
-        button.Click += window.CellClickHandler;
+        button.Click += _window.CellClickHandler;
         button.PointerPressed += ( sender, e ) =>
         {
             if( e.GetCurrentPoint ( button ).Properties.IsLeftButtonPressed )
             {
-                window.CellClickHandler ( sender, e );
+                _window.CellClickHandler ( sender, e );
             }
             else if ( e.GetCurrentPoint ( button ).Properties.IsRightButtonPressed )
             {
-                window.CellRightClickHandler ( sender, e );
+                _window.CellRightClickHandler ( sender, e );
             }
         };
             

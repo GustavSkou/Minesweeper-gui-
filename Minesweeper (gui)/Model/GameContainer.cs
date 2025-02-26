@@ -19,13 +19,14 @@ class GameContainer
 
     public void Draw ( GameWindow window )
     {
-        PanelGrid panel = new PanelGrid();
-        
-        GameState gameState = new GameState(window);
-        FlagCounter flagCounter = new FlagCounter(Minefield.Instance.Mines);
-        TimeCounter timeCounter = new TimeCounter();
+        FlagCounter flagCounter = new FlagCounter(10);
 
-        var minefieldGrid = Minefield.Instance.CreateMinefieldGrid ( window );
+        Minefield minefield = new Minefield(9,9,10, window, flagCounter);
+        
+        GameState gameState = new GameState(window, minefield, flagCounter);
+        PanelGrid panel = new PanelGrid();
+
+        TimeCounter timeCounter = new TimeCounter();
 
         panel.Add ( gameState.ButtonInstance, 1 );
         panel.Add ( flagCounter.StackPanel, 0 );
@@ -35,8 +36,8 @@ class GameContainer
         _grid.Children.Add ( panel.Grid );
         Grid.SetRow ( panel.Grid, 0 );
 
-        _grid.Children.Add ( minefieldGrid );
-        Grid.SetRow ( minefieldGrid, 1 );
+        _grid.Children.Add ( minefield.Grid );
+        Grid.SetRow ( minefield.Grid, 1 );
     }
 
     private Grid? GetGrid ( GameWindow window )

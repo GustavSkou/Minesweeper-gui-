@@ -2,14 +2,15 @@ using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Minesweeper__gui_;
 
-public class GameState : IClickable , ISetDeadState
+public class GameState : IClickable , ISetDeadState, IRestartGame
 {
 	private bool _state;
 	
     private Button _buttonInstance;     // Button instance that it is connected to
     private GameWindow _window;         // Window 
+    private IRestartGame _minefield, _flagCounter;
 
-	private static double _height = Cell.Height;
+    private static double _height = Cell.Height;
     private static double _width = Cell.Width;
 
     public double Height { get { return _height; } }
@@ -20,10 +21,12 @@ public class GameState : IClickable , ISetDeadState
 		get { return _buttonInstance; }
 	}
 
-	public GameState ( GameWindow window )
+	public GameState ( GameWindow window, IRestartGame minefield, IRestartGame flagCounter )
 	{
+        _minefield = minefield;
         _window = window;
         _state = true;
+        _flagCounter = flagCounter;
         CreateButton ();
     }
 
@@ -49,9 +52,10 @@ public class GameState : IClickable , ISetDeadState
         _buttonInstance.Content = GameStateImageHandler.Dead;
     }
 
-    private void RestartGame ()
+    public void RestartGame ()
     {
-        Minefield.Instance.ResetMinefield ( _window );
+        _minefield.RestartGame ();
+        _flagCounter.RestartGame ();
         SetAliveState ();
     }
 
@@ -69,6 +73,4 @@ public class GameState : IClickable , ISetDeadState
 		};
 		_buttonInstance.Click += _window.RestartClickHandler;
 	}
-
-	
 }

@@ -1,7 +1,9 @@
 using Avalonia.Controls;
-
 public abstract class Cell : IClickable
 {
+    private IFlagCount _flagCounter;
+    private IMinefield _minefield;
+
     protected int _x, _y, _neighbourMines;
     protected bool _isFlagged;
     protected Button _buttonInstance;
@@ -29,6 +31,13 @@ public abstract class Cell : IClickable
     }
     public Image Image { get; set; }
 
+    public Cell ( IFlagCount flagCounter, IMinefield minefield)
+    {
+        _isFlagged = false;
+        _minefield = minefield;
+        _flagCounter = flagCounter;
+    }
+
     public virtual void LeftClick ( Button button )
     {
         if ( button.Tag is Cell cell )
@@ -36,7 +45,7 @@ public abstract class Cell : IClickable
             if ( cell.IsFlagged || cell is OpenCell )
                 return;
 
-            button.Tag = new OpenCell ( cell );
+            button.Tag = new OpenCell ( cell, _flagCounter, _minefield );
 
             if ( cell._neighbourMines > 0 )
             {
@@ -61,12 +70,21 @@ public abstract class Cell : IClickable
         if ( cell.IsFlagged )
         {
             cell.IsFlagged = false;
+            _flagCounter.Up ();
             button.Content = cell.Image;
         }
         else
         {
-            cell.IsFlagged = true;
-            button.Content = RevealImage( cell );
+            if (_flagCounter.Count > 0)
+            {
+                cell.IsFlagged = true;
+                _flagCounter.Down ();
+                button.Content = RevealImage( cell );
+            }
+            else
+            {
+                return;
+            }
         }
     }
 
@@ -82,7 +100,7 @@ public abstract class Cell : IClickable
                 for (int rowIndex = cell.X - 1; rowIndex <= cell.X + 1; rowIndex++ )
                 {
                     // Check out of range
-                    if ( rowIndex < 0 || rowIndex >= Minefield.Instance.Height )
+                    if ( rowIndex < 0 || rowIndex >= _minefield.Height )
                         continue;
 
                     for (int columnIndex = cell.Y - 1; columnIndex <= cell.Y + 1; columnIndex++ )
@@ -92,13 +110,13 @@ public abstract class Cell : IClickable
                             continue;
 
                         // Check out of range
-                        if ( columnIndex < 0 || columnIndex >= Minefield.Instance.Width )
+                        if ( columnIndex < 0 || columnIndex >= _minefield.Width )
                             continue;
 
-                        if ( Minefield.Instance.Cells[rowIndex, columnIndex] is OpenCell )
+                        if ( _minefield.Cells[rowIndex, columnIndex] is OpenCell )
                             continue;
 
-                        Cell surroundingCell = Minefield.Instance.Cells [rowIndex, columnIndex];    
+                        Cell surroundingCell = _minefield.Cells [rowIndex, columnIndex];    
                         surroundingCell.LeftClick ( surroundingCell.ButtonInstance );
                     }
                 }

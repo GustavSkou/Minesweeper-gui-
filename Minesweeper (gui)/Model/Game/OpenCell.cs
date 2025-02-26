@@ -2,7 +2,7 @@
 
 public class OpenCell : Cell
 { 
-	public OpenCell(Cell cell)
+	public OpenCell(Cell cell, IFlagCount flagCounter, IMinefield minefield ) : base ( flagCounter, minefield )
     {
         _x = cell.X;
         _y = cell.Y;

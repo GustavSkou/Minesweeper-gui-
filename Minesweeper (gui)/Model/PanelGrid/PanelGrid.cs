@@ -1,6 +1,4 @@
 ﻿using Avalonia.Controls;
-using Minesweeper__gui_;
-using System;
 
 class PanelGrid
 {
@@ -46,20 +44,9 @@ class PanelGrid
             Name = "PanelGrid",
             HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
             Background = Avalonia.Media.Brushes.Gray,
-            RowDefinitions = new Avalonia.Controls.RowDefinitions ("*"),
-            ColumnDefinitions = new Avalonia.Controls.ColumnDefinitions ("* * *"),
+            RowDefinitions = new RowDefinitions ("*"),
+            ColumnDefinitions = new ColumnDefinitions ("* * *"),
         };
-        
-
-        //for ( int row = 0; row < 1; row++ )
-        //{
-        //    grid.RowDefinitions.Add ( new RowDefinition () );
-        //}
-
-        //for ( int column = 0; column < 3; column++ )
-        //{
-        //    grid.ColumnDefinitions.Add ( new ColumnDefinition () );
-        //}
 
         return grid;
     }
