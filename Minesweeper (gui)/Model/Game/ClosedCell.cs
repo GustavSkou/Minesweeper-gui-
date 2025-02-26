@@ -2,7 +2,7 @@
 
 public class ClosedCell : Cell
 {
-    public ClosedCell ( int x, int y)
+    public ClosedCell ( int x, int y, IFlagCount flagCounter, IMinefield minefield ) : base ( flagCounter, minefield )
     {
         Image = RevealImage ( this );
 
@@ -16,6 +16,4 @@ public class ClosedCell : Cell
     {
         base.LeftClick ( button );
     }
-
-
 }

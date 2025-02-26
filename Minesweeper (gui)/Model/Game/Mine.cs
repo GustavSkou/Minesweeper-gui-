@@ -10,7 +10,7 @@ public class Mine : Cell
         get { return _exploded; }
     }
 
-    public Mine ( Cell cell )
+    public Mine ( Cell cell, IFlagCount flagCounter, IMinefield minefield ) : base ( flagCounter, minefield )
     {
         Image = cell.Image;
         cell.ButtonInstance = _buttonInstance;

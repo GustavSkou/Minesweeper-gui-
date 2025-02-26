@@ -1,22 +1,19 @@
 ﻿using Avalonia.Controls;
 
-interface IFlagCount
+public class FlagCounter : IFlagCount , IRestartGame
 {
-    void Up ();
-    void Down ();
-}
-
-public class FlagCounter : IFlagCount
-{
-    private int _counter;
+    private int _mines;
+    private int _count;
     private StackPanel _stackPanel;
 
+    public int Count { get { return _count; } }
     public StackPanel StackPanel { get { return _stackPanel; } }
 
     public FlagCounter(int mines)
     {
+        _mines = mines;
         _stackPanel = CreateStackPanel ();
-        _counter = mines;
+        _count = mines;
 
         UpdateCounter ();
     }
@@ -33,21 +30,27 @@ public class FlagCounter : IFlagCount
     private int[] ExtractCountNums()
     {
         return [
-            _counter / 100,
-            ( _counter % 100 ) / 10,
-            _counter % 10
+            _count / 100,
+            ( _count % 100 ) / 10,
+            _count % 10
         ];
     }
 
     public void Up()
     {
-        _counter++;
+        _count++;
         UpdateCounter ();
     }
 
     public void Down ()
     {
-        _counter--;
+        _count--;
+        UpdateCounter ();
+    }
+
+    public void RestartGame ()
+    {
+        _count = _mines;
         UpdateCounter ();
     }
 
