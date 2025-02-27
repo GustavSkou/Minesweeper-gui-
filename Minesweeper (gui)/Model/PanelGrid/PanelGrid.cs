@@ -1,6 +1,6 @@
 ﻿using Avalonia.Controls;
 
-class PanelGrid
+public class PanelGrid
 {
     private Grid _grid;
 

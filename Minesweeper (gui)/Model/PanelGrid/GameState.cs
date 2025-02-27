@@ -30,7 +30,7 @@ public class GameState : IClickable , ISetDeadState, IRestartGame
         CreateButton ();
     }
 
-    public void LeftClick( Button button )
+    public void LeftClick( Button button, ISetDeadState state )
 	{
 		RestartGame();
 	}

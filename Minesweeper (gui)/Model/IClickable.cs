@@ -2,6 +2,6 @@
 
 public interface IClickable
 {
-    void LeftClick ( Button button );
+    void LeftClick ( Button button, ISetDeadState obj );
     void RightClick ( Button button );
 }

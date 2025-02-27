@@ -10,7 +10,7 @@ public class OpenCell : Cell
         _neighbourMines = cell.NeighbourMines;
     }
 
-    public override void LeftClick ( Button button )
+    public override void LeftClick ( Button button, ISetDeadState igameState )
     {
         return;
     }

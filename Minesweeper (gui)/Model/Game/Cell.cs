@@ -38,7 +38,7 @@ public abstract class Cell : IClickable
         _flagCounter = flagCounter;
     }
 
-    public virtual void LeftClick ( Button button )
+    public virtual void LeftClick ( Button button, ISetDeadState IgameState )
     {
         if ( button.Tag is Cell cell )
         {
@@ -117,7 +117,7 @@ public abstract class Cell : IClickable
                             continue;
 
                         Cell surroundingCell = _minefield.Cells [rowIndex, columnIndex];    
-                        surroundingCell.LeftClick ( surroundingCell.ButtonInstance );
+                        surroundingCell.LeftClick ( surroundingCell.ButtonInstance, null );
                     }
                 }
             }

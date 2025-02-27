@@ -9,12 +9,12 @@ public class FlagCounter : IFlagCount , IRestartGame
     public int Count { get { return _count; } }
     public StackPanel StackPanel { get { return _stackPanel; } }
 
-    public FlagCounter(int mines)
+    public FlagCounter(GameSettings settings)
     {
-        _mines = mines;
+        _mines = settings.Mines;
+        _count = settings.Mines;
         _stackPanel = CreateStackPanel ();
-        _count = mines;
-
+        
         UpdateCounter ();
     }
 

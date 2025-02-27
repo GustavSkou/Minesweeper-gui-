@@ -22,14 +22,14 @@ public class Mine : Cell
         _isFlagged = cell.IsFlagged;
     }
 
-    public override void LeftClick ( Button button )
+    public override void LeftClick ( Button button, ISetDeadState IgameState )
     {
         if ( button.Tag is Mine mine )
         {
             if ( mine.IsFlagged || mine.Exploded )
                 return;
 
-            mine.Explode ();
+            mine.Explode ( IgameState );
 
             try
             {
@@ -52,11 +52,13 @@ public class Mine : Cell
         base.RightClick ( button );
     }
 
-    private void Explode ()
+    private void Explode ( ISetDeadState IgameState )
     {
         _exploded = true;
+
+        IgameState.SetDeadState ();
         //if (game is not over)
-            //_buttonInstance.Background = Brushes.Red;
+        //_buttonInstance.Background = Brushes.Red;
 
         //GameStateButton.Instance.SetDeadState ();
     }

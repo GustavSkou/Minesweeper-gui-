@@ -22,11 +22,11 @@ public class Minefield : IMinefield, IRestartGame
         set { cells = value; }
     }
 
-    public Minefield(int height, int width, int mines, GameWindow window, IFlagCount flagCounter)
+    public Minefield(GameSettings settings, GameWindow window, IFlagCount flagCounter)
 	{
-        _height = height;
-        _width = width;
-        _mines = mines;
+        _height = settings.Height;
+        _width = settings.Width;
+        _mines = settings.Mines;
         _flagCounter = flagCounter;
         _window = window;
 

@@ -12,8 +12,8 @@ public class ClosedCell : Cell
         _neighbourMines = 0;
     }
 
-    public override void LeftClick ( Button button )
+    public override void LeftClick ( Button button, ISetDeadState IgameState )
     {
-        base.LeftClick ( button );
+        base.LeftClick ( button, IgameState );
     }
 }
