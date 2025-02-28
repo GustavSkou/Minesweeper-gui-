@@ -12,6 +12,7 @@ namespace Minesweeper__gui_
         private PanelGrid panel;
         private TimeCounter timeCounter;
         private GameContainer gameContainer;
+        private ConsoleContainer consoleContainer;
 
         public GameWindow ()
         {
@@ -37,22 +38,25 @@ namespace Minesweeper__gui_
                 (IRestartGame) flagCounter,
                 (IRestartGame) timeCounter
             );
-            panel = new PanelGrid ();
-            
+            panel = new PanelGrid (this);
+            panel.Add ( flagCounter.StackPanel, 0 );
+            panel.Add ( gameState.ButtonInstance, 1 );
+            panel.Add ( timeCounter.StackPanel, 2 );
+
 
             gameContainer = new GameContainer 
             ( 
                 this, 
-                minefield.Grid, 
-                panel, 
-                gameState.ButtonInstance, 
-                flagCounter.StackPanel, 
-                timeCounter.StackPanel 
+                minefield.Grid
             );
+
+            consoleContainer = new ConsoleContainer(this);
 
             SizeToContent = SizeToContent.WidthAndHeight;
 
-            gameContainer.Draw ( this );
+            panel.Draw ();
+            consoleContainer.Draw ();
+            gameContainer.Draw ();
         }
 
         public void CellClickHandler ( Object? sender, RoutedEventArgs args )

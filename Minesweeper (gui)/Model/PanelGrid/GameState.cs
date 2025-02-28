@@ -10,11 +10,8 @@ public class GameState : IClickable , ISetDeadState, IRestartGame
     private GameWindow _window;         // Window 
     private IRestartGame _minefield, _flagCounter, _timeCounter;
 
-    private static double _height = Cell.Height;
-    private static double _width = Cell.Width;
-
-    public double Height { get { return _height; } }
-	public double Width { get { return _width; } }
+    public static double Height = Cell.Height * 1.2;
+    public static double Width = Cell.Width * 1.2;
 
 	public Button ButtonInstance
 	{
@@ -66,8 +63,8 @@ public class GameState : IClickable , ISetDeadState, IRestartGame
 		_buttonInstance = new Button ()
 		{
 			Content = GameStateImageHandler.Alive, 
-			Height = _height,
-			Width = _width,
+			Height = Height,
+			Width = Height,
 			Margin = new Avalonia.Thickness ( 0 ),
 			Tag = this,
 			HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center

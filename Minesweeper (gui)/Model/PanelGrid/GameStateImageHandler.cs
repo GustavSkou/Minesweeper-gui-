@@ -5,8 +5,8 @@ using System;
 public class GameStateImageHandler
 {
     private static readonly string _contentPath = "content/game_state_image/";
-    private static double _height = Cell.Height;
-    private static double _width = Cell.Width;
+    private static double _height = GameState.Height;
+    private static double _width = GameState.Width;
 
 
     public static Image Alive

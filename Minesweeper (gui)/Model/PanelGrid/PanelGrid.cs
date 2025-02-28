@@ -1,4 +1,6 @@
 ﻿using Avalonia.Controls;
+using Minesweeper__gui_;
+using System;
 
 public class PanelGrid
 {
@@ -9,10 +11,14 @@ public class PanelGrid
         get { return _grid; }
     }
 
-    public PanelGrid ()
+    public PanelGrid (GameWindow window)
     {
-        _grid = CreateGrid ();
-        _grid.Name = "PanelGrid";
+        _grid = GetGrid (window);
+    }
+
+    public void Draw ()
+    {
+
     }
 
     public void Add( Control item , int column)
@@ -33,21 +39,26 @@ public class PanelGrid
         }
 
         _grid.Children.Add ( item );
-
         Grid.SetColumn ( item, column );
     }
 
-    private Grid CreateGrid ()
+    private Grid? GetGrid ( GameWindow window )
     {
-        var grid = new Grid ()
-        {
-            Name = "PanelGrid",
-            HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
-            Background = Avalonia.Media.Brushes.Gray,
-            RowDefinitions = new RowDefinitions ("*"),
-            ColumnDefinitions = new ColumnDefinitions ("* * *"),
-        };
-
+        var grid = window.FindControl<Grid>("GamePanel") ?? throw new InvalidOperationException("GameContainer not found in the window.");
         return grid;
     }
+
+    //private Grid CreateGrid ()
+    //{
+    //    var grid = new Grid ()
+    //    {
+    //        Name = "PanelGrid",
+    //        HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
+    //        Background = Avalonia.Media.Brushes.Gray,
+    //        RowDefinitions = new RowDefinitions ("*"),
+    //        ColumnDefinitions = new ColumnDefinitions ("* * *"),
+    //    };
+
+    //    return grid;
+    //}
 }

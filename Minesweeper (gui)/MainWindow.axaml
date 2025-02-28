@@ -7,9 +7,25 @@
         Title="Minesweeper__gui_">
 
   <Grid
-    RowDefinitions="auto auto"
-    ColumnDefinitions="auto"
-    Name="GameContainer" Background="AliceBlue">    
+    RowDefinitions="auto auto auto auto auto"
+    ColumnDefinitions="auto auto auto"
+    Name="ConsoleContainer" Background="Red">
+
+    <Grid
+      Grid.Row="1" Grid.Column="1"
+      Name="GamePanel"
+      ColumnDefinitions="* * *"
+      HorizontalAlignment="Stretch"
+      Background="Gray">
+    </Grid>
+    
+    <Grid
+      Grid.Row="3" Grid.Column="1"
+      RowDefinitions="auto auto"
+      ColumnDefinitions="auto"
+      Name="GameContainer" Background="AliceBlue">    
+    </Grid>
+    
   </Grid>
   
 </Window>
