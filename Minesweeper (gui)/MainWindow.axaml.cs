@@ -29,14 +29,16 @@ namespace Minesweeper__gui_
                 this, 
                 (IFlagCount) flagCounter 
             );
+            timeCounter = new TimeCounter ();
             gameState = new GameState 
             ( 
                 this, 
                 (IRestartGame) minefield, 
-                (IRestartGame) flagCounter 
+                (IRestartGame) flagCounter,
+                (IRestartGame) timeCounter
             );
             panel = new PanelGrid ();
-            timeCounter = new TimeCounter ();
+            
 
             gameContainer = new GameContainer 
             ( 

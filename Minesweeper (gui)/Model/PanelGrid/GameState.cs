@@ -8,7 +8,7 @@ public class GameState : IClickable , ISetDeadState, IRestartGame
 	
     private Button _buttonInstance;     // Button instance that it is connected to
     private GameWindow _window;         // Window 
-    private IRestartGame _minefield, _flagCounter;
+    private IRestartGame _minefield, _flagCounter, _timeCounter;
 
     private static double _height = Cell.Height;
     private static double _width = Cell.Width;
@@ -21,10 +21,11 @@ public class GameState : IClickable , ISetDeadState, IRestartGame
 		get { return _buttonInstance; }
 	}
 
-	public GameState ( GameWindow window, IRestartGame minefield, IRestartGame flagCounter )
+	public GameState ( GameWindow window, IRestartGame minefield, IRestartGame flagCounter, IRestartGame timeCounter )
 	{
         _minefield = minefield;
         _window = window;
+        _timeCounter = timeCounter;
         _state = true;
         _flagCounter = flagCounter;
         CreateButton ();
@@ -56,6 +57,7 @@ public class GameState : IClickable , ISetDeadState, IRestartGame
     {
         _minefield.RestartGame ();
         _flagCounter.RestartGame ();
+        _timeCounter.RestartGame ();
         SetAliveState ();
     }
 
