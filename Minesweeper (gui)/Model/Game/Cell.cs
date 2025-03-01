@@ -8,8 +8,8 @@ public abstract class Cell : IClickable
     protected bool _isFlagged;
     protected Button _buttonInstance;
 
-    public static double Height = 25;  
-    public static double Width = 25;
+    public static int Height = 25;  
+    public static int Width = 25;
 
     public int X { get { return _x; } } // currently not in use
     public int Y { get { return _y; } } // currently not in use

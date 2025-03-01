@@ -7,31 +7,38 @@ public class ConsoleContainer
 {
     Grid _grid;
 
-    public ConsoleContainer( GameWindow window )
+    int _gameContainerHeight, _gameContainerWidth, _panelHeight, _panelWidth;
+
+    public ConsoleContainer( GameWindow window, int gameContainerHeight, int gameContainerWidth, int panelHeight, int panelWidth )
     {
         _grid = GetGrid ( window );
+        _gameContainerHeight = gameContainerHeight;
+        _gameContainerWidth = gameContainerWidth;
+        _panelHeight = panelHeight;
+        _panelWidth = panelWidth;
+
     }
 
-    public void Draw()
+    public void Draw(double height, double width)
     {
         for (int i = 0; i < 2; i++)
         {
-            var verticalBorder = CreateVerticalBorder (9);
+            var verticalBorder = CreateVerticalBorder (_gameContainerHeight);
             _grid.Children.Add ( verticalBorder );
             Grid.SetRow ( verticalBorder, 3 );
             Grid.SetColumn ( verticalBorder, i*2 );
         }
-        for ( int i = 0; i < 2; i++ )
-        {
-            var verticalBorder = CreateVerticalBorder (1);
-            _grid.Children.Add ( verticalBorder );
-            Grid.SetRow ( verticalBorder, 1 );
-            Grid.SetColumn ( verticalBorder, i * 2 );
-        }
+        //for ( int i = 0; i < 2; i++ )
+        //{
+        //    var verticalBorder = CreateVerticalBorder (1);
+        //    _grid.Children.Add ( verticalBorder );
+        //    Grid.SetRow ( verticalBorder, 1 );
+        //    Grid.SetColumn ( verticalBorder, i * 2 );
+        //}
 
         for ( int i = 0; i < 5; i++ )
         {
-            var horizontalBorder = CreateHorizontalBorder (9);
+            var horizontalBorder = CreateHorizontalBorder (_gameContainerWidth);
             _grid.Children.Add ( horizontalBorder );
             Grid.SetRow ( horizontalBorder, i*2 );
             Grid.SetColumn ( horizontalBorder, 1 );
@@ -54,7 +61,7 @@ public class ConsoleContainer
             ( 
                 new Image ()
                 {
-                    Source = new Bitmap( "content\\game_container_image\\horizontal_border.png" ),                    
+                    Source = new Bitmap( "content\\game_container_image\\horizontal_border (2).png" ),                    
                     Width = 25
 
                 }
@@ -76,7 +83,7 @@ public class ConsoleContainer
             (
                 new Image ()
                 {
-                    Source = new Bitmap ( "content\\game_container_image\\border.png" ),
+                    Source = new Bitmap ( "content\\game_container_image\\vertical_border.png" ),
                     Height = 25
                 }
             );

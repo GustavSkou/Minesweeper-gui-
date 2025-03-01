@@ -50,13 +50,21 @@ namespace Minesweeper__gui_
                 minefield.Grid
             );
 
-            consoleContainer = new ConsoleContainer(this);
+            consoleContainer = new ConsoleContainer
+            (
+                this,
+                gameContainer.Height,
+                gameContainer.Width,
+                panel.Height,
+                panel.Width
+            );
 
             SizeToContent = SizeToContent.WidthAndHeight;
 
             panel.Draw ();
-            consoleContainer.Draw ();
-            gameContainer.Draw ();
+            gameContainer.Draw (  );
+            //consoleContainer.Draw ( );
+            
         }
 
         public void CellClickHandler ( Object? sender, RoutedEventArgs args )
